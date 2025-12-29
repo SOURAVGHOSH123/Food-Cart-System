@@ -12,6 +12,7 @@ import ShowImageModel from '../models/ShowImageModel'
 
 function SingleProduct() {
    const { id } = useParams()
+   console.log("sadsad");
    const { addToCart, cartList } = useContext(CartContext)
    const [product, setProduct] = useState({})
    const [activeImage, setActiveImage] = useState("")
