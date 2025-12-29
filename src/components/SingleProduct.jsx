@@ -48,6 +48,7 @@ function SingleProduct() {
          r => String(r.productId) === String(id)
       )
    );
+   console.log(review, "revw")
 
    useEffect(() => {
       if (product.images?.length) {
