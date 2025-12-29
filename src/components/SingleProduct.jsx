@@ -7,12 +7,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setReviews } from '../redux/slices/reviewSlice'
 import axios from 'axios'
 import { getAverageReview } from '../utils/helper'
+import IncrDecreItemComponent from './IncrDecreItemComponent'
+import ShowImageModel from '../models/ShowImageModel'
 
 function SingleProduct() {
    const { id } = useParams()
-   const { addToCart } = useContext(CartContext)
+   const { addToCart, cartList } = useContext(CartContext)
    const [product, setProduct] = useState({})
+   const [activeImage, setActiveImage] = useState("")
    const [open, setOpen] = useState(false)
+   const [openImage, setOpenImage] = useState(false)
    // const [value, setValue] = useState(1)
    // const [review, setReview] = useState([])
    const dispatch = useDispatch()
@@ -29,6 +33,7 @@ function SingleProduct() {
          setProduct(fetchData.data)
       }
       fetchProduct()
+      console.log(product, "productt")
    }, [id]);
    // console.log(id, "id");
 
@@ -43,6 +48,12 @@ function SingleProduct() {
          r => String(r.productId) === String(id)
       )
    );
+
+   useEffect(() => {
+      if (product.images?.length) {
+         setActiveImage(product.images[0])
+      }
+   }, [product])
 
    // useEffect(() => {
    //    const filtered = reviews.filter(
@@ -63,19 +74,40 @@ function SingleProduct() {
       // setInterval(()=> null)
    }
 
+   const existCartItem = cartList.find(item => item.id === product.id)
+
    return (
       <div className="w-full min-h-screen bg-gray-100 flex justify-center py-16 px-6">
          {product &&
-            <div className="bg-white shadow-xl rounded-2xl p-8 max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="bg-white shadow-xl rounded-2xl p-8 max-w-4xl w-full grid 
+               grid-cols-1 md:grid-cols-2 gap-10">
                {/* Product Image */}
                <div className="flex flex-col items-center gap-4">
                   {product.images &&
                      <img
-                        src={product.images[0]}
+                        onClick={() => setOpenImage(true)}
+                        src={activeImage}
                         alt={product.title}
-                        className="w-full rounded-xl shadow-md"
+                        className="w-full rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition cursor-pointer"
                      />
                   }
+
+                  {product.images?.length > 1 && (
+                     <div className="flex gap-3 mt-4">
+                        {product.images.map((img, index) => (
+                           <div key={index}
+                              onClick={() => setActiveImage(img)}
+                              className={`w-16 h-16 border rounded-lg cursor-pointer overflow-hidden
+                              ${activeImage === img ? "border-blue-600" : "border-gray-300"}`}
+                           >
+                              <img src={img}
+                                 alt="thumbnail"
+                                 className="w-full h-full object-cover"
+                              />
+                           </div>
+                        ))}
+                     </div>
+                  )}
 
                   <span className={`px-4 py-1 rounded-full text-white text-sm 
                   ${product.availabilityStatus === "In Stock" ? "bg-green-600" : "bg-red-600"}
@@ -95,6 +127,7 @@ function SingleProduct() {
                   {/* Price */}
                   <div className="flex items-center gap-4 mb-4">
                      <p className="text-3xl font-bold text-green-600">₹{product.price}</p>
+                     <s className="text-3xl font-bold text-green-600">₹{(product.price + (product.price / 100) * product.discountPercentage).toFixed(2)}</s>
                      <p className="text-red-600 font-semibold">{product.discountPercentage}% OFF</p>
                   </div>
 
@@ -129,7 +162,7 @@ function SingleProduct() {
                      <p><b>Stock:</b> {product.stock}</p>
                      <p><b>Minimum Order Qty:</b> {product.minimumOrderQuantity}</p>
                      <p><b>SKU:</b> {product.sku}</p>
-                     <p><b>Weight:</b> {product.weight} g</p>
+                     {/* <p><b>Weight:</b> {product.weight} g</p> */}
                      {/* <p><b>Dimensions:</b> {product.dimensions.width} x {product.dimensions.height} x {product.dimensions.depth} cm</p> */}
                      <p><b>Warranty:</b> {product.warrantyInformation}</p>
                      <p><b>Return Policy:</b> {product.returnPolicy}</p>
@@ -138,18 +171,38 @@ function SingleProduct() {
 
                   {/* Buttons */}
                   <div className="flex gap-4">
-                     <button className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
-                        onClick={() => addToCart(product)}>
-                        Add to Cart
-                     </button>
-                     <button className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition">
+                     {/* Add / Quantity Button */}
+                     {!existCartItem ? (
+                        <button
+                           className="w-full min-h-[52px] flex items-center justify-center
+                            bg-blue-600 text-white rounded-lg transition font-medium
+                            hover:bg-blue-700"
+                           onClick={() => addToCart(product)}>
+                           add to cart </button>
+                     ) : (
+                        <IncrDecreItemComponent item={existCartItem} />
+                     )}
+
+                     {/* Buy Now */}
+                     <button
+                        className="w-full min-h-[52px] 
+                          bg-orange-500 text-white rounded-lg 
+                          hover:bg-orange-600 transition font-medium"
+                     >
                         Buy Now
                      </button>
-                     <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-orange-600 transition"
-                        onClick={() => setOpen(true)}>
+
+                     {/* Rate Product */}
+                     <button
+                        className="w-full min-h-[52px] 
+                         bg-yellow-500 text-white rounded-lg 
+                         hover:bg-yellow-600 transition font-medium"
+                        onClick={() => setOpen(true)}
+                     >
                         Rate Product
                      </button>
                   </div>
+
                </div>
             </div>
          }
@@ -161,12 +214,14 @@ function SingleProduct() {
             product={product}
             onSubmit={handleSubmit}
          />
-
+         <ShowImageModel
+            isOpen={openImage}
+            onClose={() => setOpenImage(false)}
+            image={activeImage}
+         />
          <Review review={review} />
 
-      </div>
-
-
+      </div >
    );
 }
 

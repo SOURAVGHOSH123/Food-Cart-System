@@ -1,9 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export const CartContext = createContext(null)
 
 function CartProvider({ children }) {
+   const navigate = useNavigate()
    const [cartList, setCartList] = useState([])
    const currentUser = useSelector((state) => state.auth.currentUser)
 
@@ -32,6 +34,7 @@ function CartProvider({ children }) {
    const addToCart = (item) => {
       // console.log(typeof item, item, "item");
       // console.log(typeof value, value, "val");
+      // const cUser = useSelector(state => state.auth.currentUser)
       let existItem = cartList.findIndex((p) => item.id === p.id)
       if (existItem !== -1) {
          let temp = [...cartList]
@@ -76,8 +79,12 @@ function CartProvider({ children }) {
       setCartList(newData)
    }
 
+   const clearItems = () => {
+      setCartList([])
+   }
+
    return (
-      <CartContext.Provider value={{ addToCart, decreaseQuantity, increaseQuantity, deleteItem, cartList, setCartList }}>
+      <CartContext.Provider value={{ clearItems, addToCart, decreaseQuantity, increaseQuantity, deleteItem, cartList, setCartList }}>
          {children}
       </CartContext.Provider>
    )

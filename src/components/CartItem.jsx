@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../contexts/CartProvider'
-import { TiPlus } from "react-icons/ti";
-import { LuMinus } from "react-icons/lu";
+import { FaTrash } from "react-icons/fa6";
+import IncrDecreItemComponent from './IncrDecreItemComponent';
+import { truncate } from '../utils/truncate';
 
 function CartItem() {
    // const [value, setValue] = useState(1)
-   const { cartList, setCartList, increaseQuantity, decreaseQuantity, deleteItem } = useContext(CartContext)
+   const { cartList, clearItems, deleteItem } = useContext(CartContext)
    if (!cartList) return <p className="p-5 text-gray-500">Loading Cart...</p>
    console.log(cartList, 'lists')
 
@@ -18,35 +19,36 @@ function CartItem() {
    const deliveryCharge = subTotal > 150 ? 0 : 30.00 // free delivery above 200
    const total = +(subTotal + gst + handlingFee + deliveryCharge).toFixed(2)
 
-   // function increaseItem(quantity) {
-   //    if (quantity >= 1) {
-   //       setValue(prev => prev + 1)
-   //    }
-   //    addToCart(item, value)
+   // function handleClear(cartList) {
+   //    cartList.length = 0
+   //    // window.location.href = "/products"
    // }
 
    return (
       <div>
-         <div className="max-h-screen overflow-y-auto pr-2 space-y-4 p-4">
-            <h2 className="text-xl font-semibold mb-3">Your Cart</h2>
+         <style>
+            {`.scrollbar-hide::-webkit-scrollbar { display: none; }
+             .scrollbar-hide { scrollbar-width: none; ms-overflow-style: none; }`}
+         </style>
+         <div className="max-h-150 overflow-y-auto pr-2 space-y-4 p-4 scrollbar-hide">
+            <h2 className="text-xl mt-3 font-semibold mb-3">Your Cart</h2>
             {cartList.length > 0 &&
                <p className="text-sm text-gray-600 mb-4">
                   Total Products: {cartList.length}
+                  <button type="button" onClick={clearItems}
+                     className='cursor-pointer text-red-700 float-right pr-4'>
+                     clear</button>
                </p>
             }
             {/* Cart Items */}
             <div className="space-y-4">
                {cartList?.map((item) => (
                   <div key={item.id} className="p-3 border rounded-lg shadow-sm">
-                     <p className="font-medium">{item.title}</p>
+                     <p className="font-medium">{truncate(item.title, 25)}</p>
 
                      <div className="flex items-center gap-3 text-gray-500 text-sm">
-                        <span>${(item.price * item.quantity).toFixed(2)}</span>
-                        <TiPlus size={23} onClick={() => increaseQuantity(item.id)}
-                           className="cursor-pointer bg-red-400 p-1 text-gray-900 hover:text-green-600" />
-                        <span>{item.quantity}</span>
-                        <LuMinus size={23} onClick={() => decreaseQuantity(item.id)}
-                           className="cursor-pointer bg-red-400 p-1 text-gray-900 hover:text-green-600" />
+                        <span className='min-w-[25px]'>${(item.price * item.quantity).toFixed(2)}</span>
+                        <IncrDecreItemComponent item={item} />
 
                         {/* <p className="text-gray-500 text-sm"></p> */}
 
@@ -56,9 +58,9 @@ function CartItem() {
                               //    prev.filter((p) => p.id !== item.id)
                               // )
                            }
-                           className="text-red-500 text-sm mt-1 px-5"
+                           className="text-red-500 cursor-pointer text-sm mt-1 mr-2"
                         >
-                           Remove
+                           <FaTrash size={16} />
                         </button>
                      </div>
                   </div>

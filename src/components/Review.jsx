@@ -9,6 +9,8 @@ import { BiDislike } from "react-icons/bi";
 import { BiSolidDislike } from "react-icons/bi";
 import { getLikeCount, getDislikeCount } from '../utils/helper';
 import { useParams } from 'react-router-dom';
+import { truncate } from '../utils/truncate';
+import { MdMessage } from "react-icons/md";
 
 function Review({ review }) {
    const { id } = useParams()
@@ -18,17 +20,13 @@ function Review({ review }) {
    // const reviews = useSelector(state => state.review.reviews)
    const dispatch = useDispatch()
 
-   function truncate(text, limit = 30) {
-      return text.length > limit ? text.slice(0, limit) + "..." : text;
-   }
-
    return (
       <>
          <style>
             {`.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { scrollbar-width: none; ms-overflow-style: none; }`}
          </style>
          {review.length > 0 &&
-            <div className="max-h-screen max-w-4xl mx-auto">
+            <div className="max-h-screen max-w-sm mx-auto">
                <h2 className="text-2xl font-bold mb-6 text-gray-800">
                   Customer Reviews
                </h2>
@@ -46,8 +44,8 @@ function Review({ review }) {
                         >
                            {/* Avatar */}
                            < div className="flex-shrink-0" >
-                              <div className="w-12 h-12 rounded-full bg-green-600 text-white flex items-center 
-                           justify-center font-bold text-lg">
+                              <div className="w-10 h-10 rounded-full bg-green-600 text-white flex items-center 
+                                 justify-center font-bold text-lg">
                                  {r.name?.charAt(0)?.toUpperCase() || "U"}
                               </div>
                            </div>
@@ -71,8 +69,8 @@ function Review({ review }) {
                               </div>
 
                               {/* Comment */}
-                              <p className="mt-2 text-gray-700 leading-relaxed">
-                                 {truncate(r.comment, 20)}
+                              <p className="mt-2 text-gray-700 leading-relaxed text-wrap">
+                                 {truncate(r.comment, 100)}
                               </p>
 
                               {/* Actions */}
@@ -80,19 +78,19 @@ function Review({ review }) {
                                  <button className="hover:text-green-600 transition"
                                     onClick={() => dispatch(updateReview({ reviewid: r.id, userId: user.id, reaction: "like" }))}>
                                     {myReaction === "like" ?
-                                       <BiSolidLike size={24} className='text-blue-600' /> :
-                                       <BiLike size={24} className='text-blue-600' />}
+                                       <BiSolidLike size={20} className='text-blue-600' /> :
+                                       <BiLike size={20} className='text-blue-600' />}
                                     {likes}{myReaction === "like" && " you"}
                                  </button>
                                  <button className="hover:text-green-600 transition"
                                     onClick={() => dispatch(updateReview({ reviewid: r.id, userId: user.id, reaction: "dislike" }))}>
                                     {myReaction === "dislike" ?
-                                       <BiSolidDislike size={24} className='text-blue-600' /> :
-                                       <BiDislike size={24} className='text-blue-600' />}
+                                       <BiSolidDislike size={20} className='text-blue-600' /> :
+                                       <BiDislike size={20} className='text-blue-600' />}
                                     {dislikes}{myReaction === "dislike" && " you"}
                                  </button>
                                  <button className="hover:text-green-600 transition">
-                                    💬 Reply
+                                    <MdMessage size={20} />reply
                                  </button>
                               </div>
                            </div>

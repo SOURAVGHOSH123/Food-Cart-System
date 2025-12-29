@@ -7,7 +7,7 @@ function Home() {
       <div className="w-full min-h-screen bg-gray-50">
 
          {/* Hero Section */}
-         <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-20">
+         <section className="flex flex-col md:flex-row items-center justify-between px-10 md:px-20 py-10">
 
             {/* Left Text */}
             <div className="max-w-xl">

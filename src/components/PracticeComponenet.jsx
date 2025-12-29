@@ -27,8 +27,7 @@ function PracticeComponenet() {
          {products.map((item) => (
             <div
                key={item.id}
-               className="bg-white shadow-md rounded-xl p-6 hover:shadow-xl hover:scale-105 transition cursor-pointer"
-            >
+               className="bg-white shadow-md rounded-xl p-6 hover:shadow-xl hover:scale-105 transition cursor-pointer">
                <img
                   src={item.images[0]}
                   alt={item.name}
