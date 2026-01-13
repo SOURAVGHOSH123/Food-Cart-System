@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { CgAlignCenter } from "react-icons/cg";
+import { FaCentercode } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
 function ReviewModal({ isOpen, onClose, product, onSubmit }) {
    const [rating, setRating] = useState(0);
+   const [loadingReview, setLoadingReview] = useState(false)
    // const [like, setLike] = useState(false);
    const [comment, setComment] = useState("");
    // const cuser = JSON.parse(localStorage.getItem("currentUser"))
@@ -16,22 +19,26 @@ function ReviewModal({ isOpen, onClose, product, onSubmit }) {
 
    const handleSubmit = () => {
       if (!rating || !comment.trim()) return alert("Please add rating & comment");
-
-      onSubmit({
-         id: uuid(),
-         productId: product.id,
-         userId: user.id,
-         name: user.name,
-         rating,
-         like: false,
-         reactions: {},
-         comment,
-         date: Date.now(),
-      });
-
-      setRating(0);
-      setComment("");
-      onClose();
+      setLoadingReview(true)
+      try {
+         onSubmit({
+            id: uuid(),
+            productId: product.id,
+            userId: user.id,
+            name: user.name,
+            rating,
+            like: false,
+            reactions: {},
+            comment,
+            date: Date.now(),
+         });
+         setRating(0);
+         setComment("");
+         onClose();
+         setLoadingReview(false)
+      } catch (error) {
+         console.log(error?.message || error?.data?.message, "review submit error")
+      }
    };
 
    return (
@@ -80,7 +87,16 @@ function ReviewModal({ isOpen, onClose, product, onSubmit }) {
                   onClick={handleSubmit}
                   className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
                >
-                  Submit
+                  {loadingReview ? <ThreeDots
+                     visible={true}
+                     height="30"
+                     width="30"
+                     color="#4fa94d"
+                     radius="9"
+                     ariaLabel="three-dots-loading"
+                     wrapperStyle={{ text: CgAlignCenter }}
+                     wrapperClass=""
+                  /> : "Submit"}
                </button>
 
                <button

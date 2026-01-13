@@ -23,7 +23,6 @@ const Profile = React.lazy(() => import('./pages/Profile'))
 const ForgetPassword = React.lazy(() => import('./pages/ForgetPassword'))
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from './redux/slices/cartSlice'
 import PracticeComponenet from './components/PracticeComponenet'
 import { ToastContainer } from 'react-toastify'
 

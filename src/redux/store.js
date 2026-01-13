@@ -3,11 +3,11 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "../redux/slices/userSlice"
 import reviewReducer from '../redux/slices/reviewSlice'
-// import cartReducer from "../redux/slices/cartSlice";
+import wishReducer from '../redux/slices/wishSlice'
 
 // combine reducers
 const rootReducer = combineReducers({
-   // cart: cartReducer,
+   wish: wishReducer,
    auth: userReducer,
    review: reviewReducer,
 });
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
    key: "root",
    storage,
-   whitelist: ["cart", "auth", "review"],
+   whitelist: ["wish", "auth", "review"],
 };
 
 // persisted reducer
