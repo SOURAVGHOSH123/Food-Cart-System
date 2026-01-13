@@ -29,8 +29,8 @@ function ForgetPassword() {
    const existUser = Users.findIndex((user) => {
       return user.email == email
    })
-   console.log(Users)
-   console.log(existUser, "index")
+   // console.log(Users)
+   // console.log(existUser, "index")
 
    function handleVarify(e) {
       e.preventDefault()

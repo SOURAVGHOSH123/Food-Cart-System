@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { IoIosPersonAdd } from "react-icons/io";
+import { IoPerson } from "react-icons/io5";
 
 function About() {
    const location = useLocation();
@@ -72,33 +73,34 @@ function About() {
          <section className="px-10 md:px-20 py-16 bg-gray-100">
             <h2 className="text-3xl font-semibold mb-10">Meet the Team</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
 
                <div className="p-6 shadow bg-white rounded-xl text-center">
-                  <img
-                     src={<IoIosPersonAdd size={40} />}
-                     alt="Team"
-                     className="w-32 h-32 mx-auto rounded-full mb-4"
-                  />
+                  <IoIosPersonAdd size={100}
+                     className="mx-auto rounded-full mb-4" />
                   <h3 className="text-xl font-bold">Sourav Ghosh</h3>
                   <p className="text-gray-600">Founder</p>
                </div>
 
                <div className="p-6 shadow bg-white rounded-xl text-center">
-                  <IoIosPersonAdd size={40} className="w-32 h-32 mx-auto rounded-full mb-4" />
-
+                  <IoIosPersonAdd size={100}
+                     className="mx-auto rounded-full mb-4" />
                   <h3 className="text-xl font-bold">Rahul Sharma</h3>
                   <p className="text-gray-600">App Developer</p>
                </div>
 
                <div className="p-6 shadow bg-white rounded-xl text-center">
-                  <img
-                     src={<IoIosPersonAdd size={40} />}
-                     alt="Team"
-                     className="w-32 h-32 mx-auto rounded-full mb-4"
-                  />
+                  <IoPerson size={100}
+                     className="mx-auto rounded-full mb-4" />
                   <h3 className="text-xl font-bold">Priya Singh</h3>
                   <p className="text-gray-600">UI/UX Designer</p>
+               </div>
+
+               <div className="p-6 shadow bg-white rounded-xl text-center">
+                  <IoIosPersonAdd size={100}
+                     className="mx-auto rounded-full mb-4" />
+                  <h3 className="text-xl font-bold">Satyam Saradha</h3>
+                  <p className="text-gray-600">Software Designer</p>
                </div>
 
             </div>

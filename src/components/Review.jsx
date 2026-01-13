@@ -23,7 +23,8 @@ function Review({ review }) {
    return (
       <>
          <style>
-            {`.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { scrollbar-width: none; ms-overflow-style: none; }`}
+            {`.scrollbar-hide::-webkit-scrollbar { display: none; }
+            .scrollbar-hide { scrollbar-width: none; ms-overflow-style: none; }`}
          </style>
          {review.length > 0 &&
             <div className="max-h-screen max-w-sm mx-auto">
@@ -31,7 +32,7 @@ function Review({ review }) {
                   Customer Reviews
                </h2>
 
-               <div className="overflow-y-auto space-y-6 max-h-176 scrollbar-hide">
+               <div className="space-y-6 max-h-[65vh] overflow-y-auto scrollbar-hide">
                   {review.map((r, index) => {
                      const reactions = r.reactions || {};
                      const myReaction = reactions[user.id]

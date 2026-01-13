@@ -148,12 +148,14 @@ function Signup() {
                         setConfirmPassword(e.target.value)
                      }
                      placeholder="Confirm Password"
-                     className="w-full border p-3 pr-12 rounded-lg outline-none focus:ring-2 focus:ring-green-600"
+                     className="w-full border p-3 pr-12 rounded-lg outline-none
+                      focus:ring-2 focus:ring-green-600"
                   />
 
                   {/* Eye Icon */}
                   <span
-                     className="absolute right-4 top-3 text-xl cursor-pointer text-gray-600 hover:text-gray-800"
+                     className="absolute right-4 top-3 text-xl cursor-pointer
+                      text-gray-600 hover:text-gray-800"
                      onClick={() => setSeenConfirm(!seenConfirm)}
                   >
                      {!seenConfirm ? <IoEye /> : <IoEyeOff />}
@@ -161,7 +163,8 @@ function Signup() {
                </div>
 
                <button
-                  className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold"
+                  className="w-full py-3 bg-green-600 text-white rounded-lg
+                   hover:bg-green-700 transition font-semibold"
                >Sign Up
                </button>
 
