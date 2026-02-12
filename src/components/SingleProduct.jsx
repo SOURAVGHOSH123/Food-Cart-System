@@ -24,6 +24,7 @@ function SingleProduct() {
    const dispatch = useDispatch()
 
    const reviews = useSelector(state => state.review.reviews)
+   console.log(reviews, "rs")
    // const [reviews, setReviews] = useState([])
 
    useEffect(() => {
@@ -32,7 +33,7 @@ function SingleProduct() {
          async function fetchProduct() {
             let fetchData = await axios.get(`https://dummyjson.com/products/${id}`)
             // let data = await fetchData.json();
-            // console.log(fetchData.data, "data")
+            console.log(fetchData.data, "data")
             setProduct(fetchData.data)
             setLoading(false)
          }
@@ -51,11 +52,10 @@ function SingleProduct() {
    // }, [])
    // console.log(reviews, "reviews")
 
-   const review = useSelector(state =>
-      state.review.reviews.filter(
-         r => String(r.productId) === String(id)
-      )
+   const review = reviews.filter(
+      (r) => String(r.productId) === String(id)
    );
+   console.log(review, "rvw")
 
    useEffect(() => {
       if (product.images?.length) {
@@ -72,8 +72,9 @@ function SingleProduct() {
    // }, [reviews, id]);
 
    function handleSubmit(data) {
+      // e.preventDefault();
       try {
-         // console.log(data, "data");
+         console.log(data, "data");
          // setReview(data)
          let temp = [...reviews, data]
          // localStorage.setItem("reviews", JSON.stringify(temp));
@@ -89,13 +90,11 @@ function SingleProduct() {
    const existCartItem = cartList.find(item => item.id === product.id)
 
    const getAverageReview = () => {
-      const review = reviews.filter((r) => r.productId == id)
-      const totalRating = review.reduce((totalRating, r) => {
-         return totalRating += r.rating
-      }, 0)
-      const avgRating = totalRating > 0 ? Number(totalRating / review.length).toFixed(2) : "4.00"
-      return avgRating
-   }
+      if (!review || review.length === 0) return "4.00";
+
+      const totalRating = review.reduce((sum, r) => sum + r.rating, 0);
+      return (totalRating / review.length).toFixed(2);
+   };
 
    return (
       <div className="w-full min-h-screen bg-gray-100 px-3 md:px-6 py-6">
@@ -129,7 +128,7 @@ function SingleProduct() {
                                  src={img}
                                  onClick={() => setActiveImage(img)}
                                  className={`w-16 h-16 object-cover rounded-lg cursor-pointer border
-                    ${activeImage === img ? "border-blue-600" : "border-gray-300"}`}
+                                 ${activeImage === img ? "border-blue-600" : "border-gray-300"}`}
                               />
                            ))}
                         </div>

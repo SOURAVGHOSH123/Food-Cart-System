@@ -35,7 +35,7 @@ function ProductCard({ item }) {
    }
 
    function handleAddWish(item) {
-      console.log(item, "wish")
+      // console.log(item, "wish")
       if (!currentUser) {
          navigate('/signin')
          return;
@@ -48,7 +48,7 @@ function ProductCard({ item }) {
    }
 
    function handleRemoveWish(item) {
-      console.log(item, "wishr")
+      // console.log(item, "wishr")
       if (!currentUser) {
          navigate('/signin')
          return;

@@ -25,6 +25,7 @@ const ForgetPassword = React.lazy(() => import('./pages/ForgetPassword'))
 import { useDispatch, useSelector } from 'react-redux'
 import PracticeComponenet from './components/PracticeComponenet'
 import { ToastContainer } from 'react-toastify'
+import CheckOut from './pages/Checkout'
 
 function App() {
   // const data = useSelector((state) => state.cart.cartItems);
@@ -49,6 +50,7 @@ function App() {
           <Route element={<PrivateRoutePractice />}>
             <Route path='/products/:id' element={<SingleProduct />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/checkout' element={<CheckOut />} />
           </Route>
           <Route path='/products' element={<ProductPage />} />
           <Route path='/about' element={<About />} />

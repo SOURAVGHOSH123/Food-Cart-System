@@ -4,7 +4,7 @@ import WishItem from './WishItem.JSX'
 function WishSidebar({ open, setOpen }) {
    return (
       <div
-         className={`fixed top-0 right-0 h-auto w-auto bg-white shadow-2xl 
+         className={`fixed top-0 right-0 h-auto w-auto bg-white shadow-2xl  mt-12 
             border-l transform transition-transform duration-300 z-50 items-center
          ${open ? "translate-x-0" : "translate-x-full"}`}
       >

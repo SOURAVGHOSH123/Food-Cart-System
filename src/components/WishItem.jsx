@@ -61,7 +61,7 @@ function WishItem() {
 
    if (wishList.length < 1) return <p className="min-w-50 h-140 p-5 text-gray-500">Loading Cart...</p>
 
-   console.log(wishList, "wishlist")
+   // console.log(wishList, "wishlist")
 
    return (
       <div className="w-full">
@@ -70,7 +70,7 @@ function WishItem() {
       .scrollbar-hide { scrollbar-width: none; ms-overflow-style: none; }`}
          </style>
 
-         <div className="max-h-[90vh] overflow-y-auto px-3 py-4 space-y-4 scrollbar-hide">
+         <div className="max-h-[80vh] overflow-y-auto px-3 py-4 space-y-4 scrollbar-hide">
 
             {/* HEADER */}
             <div className="flex items-center justify-between text-sm text-gray-600">
