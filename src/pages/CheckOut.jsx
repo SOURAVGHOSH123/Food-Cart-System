@@ -98,6 +98,7 @@ const CheckOut = () => {
                         id: user?.id,
                         email: user?.email,
                         name: user?.name,
+                        address: formData.address,
                         bills: total,
                         transactionId: response.razorpay_payment_id,
                         timeStamp: Date.now(),
